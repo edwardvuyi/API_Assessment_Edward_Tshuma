@@ -1,5 +1,6 @@
 package API_TEST;
 
+import io.restassured.http.ContentType;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -76,10 +77,9 @@ public class test {
                 .assertThat()
                 .statusCode(200)
                 .log().all();
-
-
     }
 
+    //Challenge Question
     @Test
     public void Challenge() {
         Location location =
@@ -89,14 +89,54 @@ public class test {
                         as(Location.class);
 
 
-        Assert.assertEquals(
-                "Beverly Hills",
-                location.getPlaces().get(0).getPlaceName()
-        );
+        // Assert.assertEquals(
+        // "Beverly Hills",
+        // location.getPlaces().get(0).getPlaceName()
+        //  );
         // .then()
         //.statusCode(200)
         //.log().all();
-
-
     }
+
+    @Test
+    public <String> void get_all_breeds() {
+        Object jsonString = given()
+                .header("content-type", "application.json")
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get("https://dog.ceo/api/breeds/image/random")
+                .then().log().all()
+                .assertThat()
+                .statusCode(200)
+                .and()
+                .extract().path("");
+
+        System.out.println("*************\n" + jsonString + "\n*************");
+    }
+
+    @Test
+    public void get_sub_breeds() {
+        given().header("content-type", "application.json")
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/breeds")
+                .then()
+                .assertThat()
+                .statusCode(200);
+    }
+
+    @Test
+    public void get_randomImageForSpecific_breed() {
+        given().header("content-type", "application.json")
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/breeds/image/random")
+                .then()
+                .assertThat()
+                .statusCode(200);
+    }
+
 }

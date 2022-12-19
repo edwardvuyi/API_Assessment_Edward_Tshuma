@@ -1,8 +1,8 @@
 package API_TEST;
 
-public class challenge_API {
+//public class challenge_API {
 
-
+/*
     public Location() {
         this.postCode = "1050";
         this.country = "Latvia";
@@ -15,3 +15,5 @@ public class challenge_API {
         this.places = places;
 }
 }
+
+ */
